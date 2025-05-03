@@ -1,0 +1,41 @@
+---- chỗ này cho em xài free nên hết tiền để free nên là mentor vs thầy vào trang https://console.twilio.com/ để tạo rùi thêm vào ạ em cảm ơn 
+
+
+async sendSms(phone:string) {
+
+const accountSid = 'ACcb7faff29658f8f2cc3f62a04365';
+const authToken = '939aaf69df7d7561b747e3068b0467';
+const client = new Twilio(accountSid, authToken);
+try {
+  const verification = await client.verify.v2
+    .services("VA07d1224ec8803e5e0ce88b28263f")
+    .verifications.create({ to: `+84${phone}`, channel: 'sms' });
+
+  return verification.status === 'pending'; // true nếu gửi thành công
+} catch (error) {
+ 
+  return false;
+}
+
+}
+
+async verifyOtp(phone: string, code: string): Promise<boolean> {
+  const accountSid = 'ACcb7faff29658f8f2f62a0ed224365';
+  const authToken = '939aaf69df7d7561be306808b0467';
+  const client = new Twilio(accountSid, authToken);
+
+  try {
+    const verificationCheck = await client.verify.v2
+      .services('VA07d1224ec880c7950ce88b28263f')
+      .verificationChecks
+      .create({ to: `+84${phone}`, code });
+
+    console.log('Kết quả xác minh OTP:', verificationCheck.status);
+
+    return verificationCheck.status === 'approved'; // true nếu OTP đúng
+  } catch (error) {
+    console.log(error)
+    console.error('Lỗi xác minh OTP:', error.message);
+    return false;
+  }
+}
