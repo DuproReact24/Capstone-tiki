@@ -1,0 +1,365 @@
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS cart_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."cart" (
+    "id" int4 NOT NULL DEFAULT nextval('cart_id_seq'::regclass),
+    "image_large" text NOT NULL,
+    "description" text NOT NULL,
+    "top_deal" bool DEFAULT false,
+    "support_delivery" bool DEFAULT false,
+    "guarantee" bool DEFAULT false,
+    "address" text NOT NULL,
+    "price" int4,
+    "id_user" int4 NOT NULL,
+    CONSTRAINT "cart_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "public"."users"("id"),
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS cate_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."cate" (
+    "id" int4 NOT NULL DEFAULT nextval('cate_id_seq'::regclass),
+    "name" varchar(255) NOT NULL,
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS cate_detail_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."cate_detail" (
+    "id" int4 NOT NULL DEFAULT nextval('cate_detail_id_seq'::regclass),
+    "name" varchar(255),
+    "id_cate" int4,
+    CONSTRAINT "cate_detail_id_cate_fkey" FOREIGN KEY ("id_cate") REFERENCES "public"."cate"("id"),
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS customer_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."customer" (
+    "id" int4 NOT NULL DEFAULT nextval('customer_id_seq'::regclass),
+    "name" varchar(255),
+    "email" varchar(255),
+    "address" text,
+    "id_user" int4,
+    "password" varchar(100),
+    CONSTRAINT "customer_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "public"."users"("id"),
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS manufacturer_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."manufacturer" (
+    "id" int4 NOT NULL DEFAULT nextval('manufacturer_id_seq'::regclass),
+    "name" varchar(255),
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS orders_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."orders" (
+    "id" int4 NOT NULL DEFAULT nextval('orders_id_seq'::regclass),
+    "image_large" text,
+    "description" text,
+    "top_deal" bool,
+    "support_delivery" bool,
+    "guarantee" bool,
+    "address" text,
+    "price" int4,
+    "id_user" int4,
+    "phone" text,
+    "name" text,
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS products_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."products" (
+    "id" int4 NOT NULL DEFAULT nextval('products_id_seq'::regclass),
+    "name" varchar(255),
+    "id_cate" int4,
+    "image_large" text,
+    "images" text,
+    "description" text,
+    "badges_icon" text,
+    "support_delivery" bool,
+    "deal" int4,
+    "top_deal" bool,
+    "price" int4,
+    "rate" int4,
+    "color" varchar(100),
+    "id_manufacturer" int4,
+    "guarantee" varchar(255),
+    "quantity_buy" int4,
+    "size_products" text,
+    "id_cate_detail" int4,
+    "madein" text,
+    CONSTRAINT "products_id_cate_fkey" FOREIGN KEY ("id_cate") REFERENCES "public"."cate"("id"),
+    CONSTRAINT "products_id_manufacturer_fkey" FOREIGN KEY ("id_manufacturer") REFERENCES "public"."manufacturer"("id"),
+    CONSTRAINT "products_id_cate_detail_fkey" FOREIGN KEY ("id_cate_detail") REFERENCES "public"."cate_detail"("id"),
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS schedule_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."schedule" (
+    "id" int4 NOT NULL DEFAULT nextval('schedule_id_seq'::regclass),
+    "id_order" int4,
+    "times" timestamp,
+    "description" text,
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS shipping_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."shipping" (
+    "id" int4 NOT NULL DEFAULT nextval('shipping_id_seq'::regclass),
+    "name_user" text,
+    "address" text,
+    "email" text,
+    "name" text,
+    "image_large" text,
+    "support_delivery" bool,
+    "deal" text,
+    "color" text,
+    "price" int4,
+    "size_products" text,
+    "status" text,
+    PRIMARY KEY ("id")
+);
+
+-- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+
+-- Sequence and defined type
+CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+
+-- Table Definition
+CREATE TABLE "public"."users" (
+    "id" int4 NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    "phone" varchar(20),
+    PRIMARY KEY ("id")
+);
+
+INSERT INTO "public"."cart" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user") VALUES
+(7, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 82);
+INSERT INTO "public"."cart" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user") VALUES
+(8, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 82);
+INSERT INTO "public"."cart" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user") VALUES
+(9, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 82);
+INSERT INTO "public"."cart" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user") VALUES
+(10, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 82),
+(14, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 83),
+(15, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 83),
+(16, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 83),
+(17, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 83),
+(18, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 83),
+(19, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 84),
+(25, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 84),
+(26, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 53453454, 84),
+(31, 'manhinh4k.webp', 'Màn hình máy tính LG UHD 4K 27'''' IPS VESA DisplayHDR 400 27UP600K-W - Hàng chính hãng', 't', 't', 'f', 'Hà NộiCầu GiấyNghĩa Tân', 5000000, 88),
+(32, 'caphehoatan1.webp', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', 't', 't', 'f', 'Hồ Chí MinhBình TânAn Lạc A', 112000, 90),
+(33, 'caphehoatan1.webp', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', 't', 't', 'f', 'Hồ Chí MinhBình TânAn Lạc A', 112000, 90),
+(35, 'caphehoatan1.webp', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', 't', 't', 'f', 'Hồ Chí MinhBình TânAn Lạc A', 112000, 91),
+(36, 'chaochongdinh.webp', 'Chảo chống dính Inox đáy từ nguyên khối đáy liên Elmich Trimax Classic EL-2702OL size 24cm', NULL, 'f', 'f', 'Hồ Chí MinhBình TânAn Lạc A', 332200, 92);
+
+INSERT INTO "public"."cate" ("id", "name") VALUES
+(5, 'Đồ gia dụng');
+INSERT INTO "public"."cate" ("id", "name") VALUES
+(6, 'Đồ Điện tử');
+INSERT INTO "public"."cate" ("id", "name") VALUES
+(7, 'Bách hóa online');
+INSERT INTO "public"."cate" ("id", "name") VALUES
+(8, 'Oto-Xe máy-Xe Đạp');
+
+INSERT INTO "public"."cate_detail" ("id", "name", "id_cate") VALUES
+(1, 'Bếp Điện saco', 5);
+INSERT INTO "public"."cate_detail" ("id", "name", "id_cate") VALUES
+(2, 'Bếp Điện toshiba', 5);
+INSERT INTO "public"."cate_detail" ("id", "name", "id_cate") VALUES
+(3, 'Tủ lạnh', 5);
+INSERT INTO "public"."cate_detail" ("id", "name", "id_cate") VALUES
+(4, 'Tủ lạnh', 6),
+(5, 'Bếp', 6),
+(6, 'Máy giặt', 6);
+
+INSERT INTO "public"."customer" ("id", "name", "email", "address", "id_user", "password") VALUES
+(2, 'Nguyen Phuoc Du', NULL, NULL, NULL, 'a4543@');
+INSERT INTO "public"."customer" ("id", "name", "email", "address", "id_user", "password") VALUES
+(3, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$5ePkwSamVuBzI4kLKgZExO4AEfJnakohKKjzfZPyS8skp9alPpe3q');
+INSERT INTO "public"."customer" ("id", "name", "email", "address", "id_user", "password") VALUES
+(4, NULL, NULL, NULL, NULL, '$2b$10$8FMNYc01cFhaMH4jW6eP5OzCZOEdte04GtCF4jh5riPw.2S99wSLi');
+INSERT INTO "public"."customer" ("id", "name", "email", "address", "id_user", "password") VALUES
+(5, NULL, NULL, NULL, NULL, '$2b$10$C6mTA2vOH/9SV8rBjbX3x.w8xmFRG/dNknLYpFvrKWMZnQVFySFG6'),
+(6, NULL, NULL, NULL, NULL, '$2b$10$0oHtkmzsQt/Wz7TtOhRSeeGoN2J2BN78.6y2Xx3uTof3OwAQXZLr2'),
+(7, NULL, NULL, NULL, NULL, '$2b$10$NKGZ/4bAk0ouwAmapZK2dOvJEVB18q29FSQu3eduQD8JU3HUiig7u'),
+(8, NULL, NULL, NULL, NULL, '$2b$10$E69SumBtb2Apo.k34ju8Qe0B9JXCTZcElqm0UN9m9X7X1qMAHdIda'),
+(9, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$9fJbMLKuI0WnLaIxAZdZ/eZBXTJGMG5uXlDjBdLiC3iqnEb.kYFT.'),
+(10, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$PGqskIBNSn5nPLTCMvN6PO4Wm/eUIMuiAIGFny3q0FvCXv43Ts6aK'),
+(11, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$NhDgHSg3zg3HI6J5tFXuHOvKr4Q5fOoQCx5fVsXKi10w7D3pxNjO.'),
+(12, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$KUOddQMkvvqGTRYH7lUd9uEWRjDtkNmUb8vVTCcpiNHjYwAGMfeye'),
+(13, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$I8HQkkJwf0XnGeYqiNn8jeuHF.mlPP/1KG1j/GpETTOWxYSOnzmIO'),
+(14, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$9VdeMRZuDMsXg3/rKPNiC.dpXFJw7Mt8h8R6B6fWbdfZhIpvfFLxC'),
+(15, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$Zg9kBK3wE/bBFO7x5wGV2eALDiLinzQ6dhVxFZkiKYoJrmWlk.lmi'),
+(16, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$bOeLwb26fHsWTIyf7b38rudb9CSI2.EWHs0vLrrR.A/ifbqwDEGIS'),
+(17, 'Nguyen Phuoc Du', NULL, NULL, NULL, '$2b$10$D5sMO0uI3TUnThKdt3X6ruLuIGGqunQd2XBM6BXkfRjiYsVlbM5sW'),
+(1, 'Nguyen Phuoc Du', NULL, NULL, 80, NULL),
+(18, NULL, NULL, NULL, 82, NULL),
+(19, NULL, NULL, NULL, 83, NULL),
+(20, NULL, NULL, NULL, 84, NULL),
+(21, NULL, NULL, NULL, 85, NULL),
+(22, NULL, NULL, NULL, 86, NULL),
+(23, NULL, NULL, NULL, 87, NULL),
+(24, NULL, NULL, NULL, 88, NULL),
+(25, NULL, NULL, NULL, 89, NULL),
+(26, NULL, NULL, NULL, 90, NULL),
+(27, NULL, NULL, NULL, 91, NULL),
+(28, NULL, NULL, NULL, 92, NULL);
+
+INSERT INTO "public"."manufacturer" ("id", "name") VALUES
+(1, 'Toshiba');
+
+
+INSERT INTO "public"."orders" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user", "phone", "name") VALUES
+(1, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh');
+INSERT INTO "public"."orders" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user", "phone", "name") VALUES
+(2, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh');
+INSERT INTO "public"."orders" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user", "phone", "name") VALUES
+(3, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh');
+INSERT INTO "public"."orders" ("id", "image_large", "description", "top_deal", "support_delivery", "guarantee", "address", "price", "id_user", "phone", "name") VALUES
+(4, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(5, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(6, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(7, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(8, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(9, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(10, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(11, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(12, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(13, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(14, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(15, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(16, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(17, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(18, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(19, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(20, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(21, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(22, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(23, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(24, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(25, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(26, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(27, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(28, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(29, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(30, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(31, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(32, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(33, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(34, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(35, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(36, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(37, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(38, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(39, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(40, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(41, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(42, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(43, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(44, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(45, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(46, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(47, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(48, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(49, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(50, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(51, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(52, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(53, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(54, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(55, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(56, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(57, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(58, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(59, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(60, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(61, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(62, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(63, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(64, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(65, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(66, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(67, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 481081086, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(68, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(69, '1744724008684-570152738.png', 'máy lạnh đến từ nhà toshiba', 't', 't', 'f', '13 Đường số 14, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh', 53453454, 83, '0896359374', 'Nguyễn Phúc Thịnh'),
+(70, 'nestcaphe3in1.webp', '[Tặng Ca Đá 1L] Combo 3 Bịch NESCAFE 3IN1 Công thức cải tiến - VỊ NGUYÊN BẢN Bịch 46 gói', 'f', NULL, 'f', '13 Duong so 14, Binh Tan, HCM', 146000, 85, '0896359374', 'Nguyen Phuc Thinh'),
+(71, 'nestcaphe3in1.webp', '[Tặng Ca Đá 1L] Combo 3 Bịch NESCAFE 3IN1 Công thức cải tiến - VỊ NGUYÊN BẢN Bịch 46 gói', 'f', NULL, 'f', '13 Duong so 14, Binh Tan, HCM', 146000, 85, '0896359374', 'Nguyen Phuc Thinh'),
+(72, 'nestcaphe3in1.webp', '[Tặng Ca Đá 1L] Combo 3 Bịch NESCAFE 3IN1 Công thức cải tiến - VỊ NGUYÊN BẢN Bịch 46 gói', 'f', NULL, 'f', '13 Duong so 14, Binh Tan, HCM', 146000, 85, '0896359374', 'Nguyen Phuc Thinh'),
+(73, 'nestcaphe3in1.webp', '[Tặng Ca Đá 1L] Combo 3 Bịch NESCAFE 3IN1 Công thức cải tiến - VỊ NGUYÊN BẢN Bịch 46 gói', 'f', NULL, 'f', '13 Duong so 14, Binh Tan, HCM', 146000, 85, '0896359374', 'Nguyen Phuc Thinh'),
+(74, 'chaochongdinh.webp', 'Chảo chống dính Inox đáy từ nguyên khối đáy liên Elmich Trimax Classic EL-2702OL size 24cm', NULL, 'f', 'f', '13 Duong so 14, Binh Tan, HCM', 332200, 88, '0896359374', 'Nguyen Phuc Thinh'),
+(75, 'caphehoatan1.webp', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', 't', 't', 'f', '13 Duong so 14, Binh Tan, HCM', 112000, 88, '0896359374', 'Nguyen Phuc Thinh'),
+(76, 'manhinh4k.webp', 'Màn hình máy tính LG UHD 4K 27'''' IPS VESA DisplayHDR 400 27UP600K-W - Hàng chính hãng', 't', 't', 'f', '13 Duong so 14, Binh Tan, HCM', 5000000, 88, '0896359374', 'Nguyen Phuc Thinh'),
+(77, 'caphehoatan1.webp', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', 't', 't', 'f', '13 Duong so 14, Binh Tan, HCM', 112000, 90, '0896359374', 'Nguyen Phuc Thinh'),
+(78, 'caphehoatan1.webp', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', 't', 't', 'f', '13 Duong so 14, Binh Tan, HCM', 112000, 90, '0896359374', 'Nguyen Phuc Thinh'),
+(79, 'chaochongdinh.webp', 'Chảo chống dính Inox đáy từ nguyên khối đáy liên Elmich Trimax Classic EL-2702OL size 24cm', NULL, 'f', 'f', '13 Duong so 14, Binh Tan, HCM', 1328800, 91, '0896359374', 'Nguyen Phuc Thinh'),
+(80, 'chaochongdinh.webp', 'Chảo chống dính Inox đáy từ nguyên khối đáy liên Elmich Trimax Classic EL-2702OL size 24cm', NULL, 'f', 'f', '13 Duong so 14, Binh Tan, HCM', 332200, 92, '0896359374', 'Nguyen Phuc Thinh');
+
+INSERT INTO "public"."products" ("id", "name", "id_cate", "image_large", "images", "description", "badges_icon", "support_delivery", "deal", "top_deal", "price", "rate", "color", "id_manufacturer", "guarantee", "quantity_buy", "size_products", "id_cate_detail", "madein") VALUES
+(6, 'Cà phê hòa tan Nescafé 3in1', 7, 'caphehoatan1.webp', '["caphehoatan1.webp"]', 'Cà phê hòa tan Nescafé 3in1 Cà Phê Sữa Đá 600G ( Bịch 25 Gói x 24g )', '', 't', 10, 't', 112000, 4, '[''yellow'']', 1, '1', 1, '[''120ml'']', 5, 'VietNam');
+INSERT INTO "public"."products" ("id", "name", "id_cate", "image_large", "images", "description", "badges_icon", "support_delivery", "deal", "top_deal", "price", "rate", "color", "id_manufacturer", "guarantee", "quantity_buy", "size_products", "id_cate_detail", "madein") VALUES
+(7, 'NESCAFE 3IN1', 7, 'nestcaphe3in1.webp', '["nestcaphe3in1.webp"]', '[Tặng Ca Đá 1L] Combo 3 Bịch NESCAFE 3IN1 Công thức cải tiến - VỊ NGUYÊN BẢN Bịch 46 gói', NULL, 'f', 2, 'f', 146000, 4, '[''yellow'']', 1, '2', 1, '[''120ml'']', NULL, 'VietNam');
+INSERT INTO "public"."products" ("id", "name", "id_cate", "image_large", "images", "description", "badges_icon", "support_delivery", "deal", "top_deal", "price", "rate", "color", "id_manufacturer", "guarantee", "quantity_buy", "size_products", "id_cate_detail", "madein") VALUES
+(8, 'Chảo chống dính Inox', 5, 'chaochongdinh.webp', '["chaochondinh1.webp"]', 'Chảo chống dính Inox đáy từ nguyên khối đáy liên Elmich Trimax Classic EL-2702OL size 24cm', NULL, 'f', 2, NULL, 332200, 5, NULL, NULL, NULL, NULL, NULL, NULL, 'VietNam');
+INSERT INTO "public"."products" ("id", "name", "id_cate", "image_large", "images", "description", "badges_icon", "support_delivery", "deal", "top_deal", "price", "rate", "color", "id_manufacturer", "guarantee", "quantity_buy", "size_products", "id_cate_detail", "madein") VALUES
+(9, 'Màn hình máy tính LG UHD 4K ', 6, 'manhinh4k.webp', '["manhinh4k.webp"]', 'Màn hình máy tính LG UHD 4K 27'''' IPS VESA DisplayHDR 400 27UP600K-W - Hàng chính hãng', NULL, 't', 15, 't', 5000000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'VietNam'),
+(10, 'Gối tựa đầu xe ô tô cao su non', 8, 'demngoi.jpg', '["demngoi.jpg"]', 'Gối tựa đầu xe ô tô cao su non', NULL, NULL, 2, NULL, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+
+
+INSERT INTO "public"."shipping" ("id", "name_user", "address", "email", "name", "image_large", "support_delivery", "deal", "color", "price", "size_products", "status") VALUES
+(1, 'Nguyen Phuoc Du', NULL, NULL, 'Áo thun nam', 'https://example.com/image.jpg', 't', '20', 'Đen', 200000, 'L', 'pending');
+
+
+INSERT INTO "public"."users" ("id", "phone") VALUES
+(17, '02583945834');
+INSERT INTO "public"."users" ("id", "phone") VALUES
+(19, '0916616077');
+INSERT INTO "public"."users" ("id", "phone") VALUES
+(20, '0916616077');
+INSERT INTO "public"."users" ("id", "phone") VALUES
+(21, '0916616077'),
+
