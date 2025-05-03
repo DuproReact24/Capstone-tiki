@@ -1,0 +1,99 @@
+[
+  {
+    "id": "14564223-3b22-42ea-ab71-498c9d199361",
+    "image": "/products/belt-1.png",
+    "title": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+    "star": 4.5,
+    "price": 19137,
+    "isTopDeal": true,
+    "isAuthentic": true,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "facilis"
+  },
+ 
+  {
+    "id": "c2ed75e3-69cd-4fc0-9434-e608c0ce2f93",
+    "image": "/products/belt-1.png",
+    "title": "The Football Is Good For Training And Recreational Purposes",
+    "star": 4.5,
+    "price": 15125,
+    "isTopDeal": false,
+    "isAuthentic": false,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "tempora"
+  },
+  {
+    "id": "c2ed75e3-69cd-4fc0-9434-e608c0ce2f93",
+    "image": "/products/belt-1.png",
+    "title": "The Football Is Good For Training And Recreational Purposes",
+    "star": 4.5,
+    "price": 15125,
+    "isTopDeal": false,
+    "isAuthentic": false,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "tempora"
+  },
+  {
+    "id": "c2ed75e3-69cd-4fc0-9434-e608c0ce2f93",
+    "image": "/products/belt-1.png",
+    "title": "The Football Is Good For Training And Recreational Purposes",
+    "star": 4.5,
+    "price": 15125,
+    "isTopDeal": false,
+    "isAuthentic": false,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "tempora"
+  },
+  {
+    "id": "c2ed75e3-69cd-4fc0-9434-e608c0ce2f93",
+    "image": "/products/belt-1.png",
+    "title": "The Football Is Good For Training And Recreational Purposes",
+    "star": 4.5,
+    "price": 15125,
+    "isTopDeal": false,
+    "isAuthentic": false,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "tempora"
+  },  {
+    "id": "c2ed75e3-69cd-4fc0-9434-e608c0ce2f93",
+    "image": "/products/belt-1.png",
+    "title": "The Football Is Good For Training And Recreational Purposes",
+    "star": 4.5,
+    "price": 15125,
+    "isTopDeal": false,
+    "isAuthentic": false,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "tempora"
+  },  {
+    "id": "c2ed75e3-69cd-4fc0-9434-e608c0ce2f93",
+    "image": "/products/belt-1.png",
+    "title": "The Football Is Good For Training And Recreational Purposes",
+    "star": 4.5,
+    "price": 15125,
+    "isTopDeal": false,
+    "isAuthentic": false,
+    "shipping": {
+      "type": "fast",
+      "date": "3h"
+    },
+    "madeIn": "tempora"
+  }
+]

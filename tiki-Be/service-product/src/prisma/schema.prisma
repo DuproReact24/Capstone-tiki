@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cate {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  cate_detail cate_detail[]
+  products    products[]
+}
+
+model cate_detail {
+  id       Int        @id @default(autoincrement())
+  name     String?    @db.VarChar(255)
+  id_cate  Int?
+  cate     cate?      @relation(fields: [id_cate], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  products products[]
+}
+
+model customer {
+  id       Int     @id @default(autoincrement())
+  name     String? @db.VarChar(255)
+  email    String? @db.VarChar(255)
+  address  String?
+  id_user  Int?
+  password String? @db.VarChar(100)
+  users    users?  @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model manufacturer {
+  id       Int        @id @default(autoincrement())
+  name     String?    @db.VarChar(255)
+  products products[]
+}
+
+model products {
+  id               Int           @id @default(autoincrement())
+  name             String?       @db.VarChar(255)
+  id_cate          Int?
+  image_large      String?
+  images           String?
+  description      String?
+  badges_icon      String?
+  support_delivery Boolean?
+  deal             Int?
+  top_deal         Boolean?
+  price            Int?
+  rate             Int?
+  color            String?       @db.VarChar(100)
+  id_manufacturer  Int?
+  guarantee        String?       @db.VarChar(255)
+  quantity_buy     Int?
+  size_products    String?
+  id_cate_detail   Int?
+  madein           String?
+  cate_detail      cate_detail?  @relation(fields: [id_cate_detail], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cate             cate?         @relation(fields: [id_cate], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  manufacturer     manufacturer? @relation(fields: [id_manufacturer], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model schedule {
+  id          Int       @id @default(autoincrement())
+  id_order    Int?
+  times       DateTime? @db.Timestamp(6)
+  description String?
+}
+
+model users {
+  id       Int        @id @default(autoincrement())
+  phone    String?    @db.VarChar(20)
+  cart     cart[]
+  customer customer[]
+}
+
+model shipping {
+  id               Int      @id @default(autoincrement())
+  name_user        String?
+  address          String?
+  email            String?
+  name             String?
+  image_large      String?
+  support_delivery Boolean?
+  deal             String?
+  color            String?
+  price            Int?
+  size_products    String?
+  status           String?
+}
+
+model cart {
+  id               Int      @id @default(autoincrement())
+  image_large      String
+  description      String
+  top_deal         Boolean? @default(false)
+  support_delivery Boolean? @default(false)
+  guarantee        Boolean? @default(false)
+  address          String
+  price            Int?
+  id_user          Int
+  users            users    @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}

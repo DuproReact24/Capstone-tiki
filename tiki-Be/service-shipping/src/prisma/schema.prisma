@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cate {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  cate_detail cate_detail[]
+  products    products[]
+}
+
+model cate_detail {
+  id       Int        @id @default(autoincrement())
+  name     String?    @db.VarChar(255)
+  id_cate  Int?
+  cate     cate?      @relation(fields: [id_cate], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  products products[]
+}
+
+model customer {
+  id       Int     @id @default(autoincrement())
+  name     String? @db.VarChar(255)
+  email    String? @db.VarChar(255)
+  address  String?
+  id_user  Int?
+  password String? @db.VarChar(100)
+  users    users?  @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model manufacturer {
+  id       Int        @id @default(autoincrement())
+  name     String?    @db.VarChar(255)
+  products products[]
+}
+
+model order_detail {
+  id               Int      @id @default(autoincrement())
+  order_id         Int?
+  name             String?
+  image_large      String?
+  support_delivery Boolean?
+  deal             String?
+  color            String?
+  price            Int?
+  size_products    String?
+  orders           orders?  @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model orders {
+  id              Int            @id @default(autoincrement())
+  id_manufacturer Int
+  id_user         Int
+  order_detail    order_detail[]
+}
+
+model products {
+  id               Int           @id @default(autoincrement())
+  name             String?       @db.VarChar(255)
+  id_cate          Int?
+  image_large      String?
+  images           String?
+  description      String?
+  badges_icon      String?
+  support_delivery Boolean?
+  deal             Int?
+  top_deal         Boolean?
+  price            Int?
+  rate             Int?
+  color            String?       @db.VarChar(100)
+  id_manufacturer  Int?
+  guarantee        String?       @db.VarChar(255)
+  quantity_buy     Int?
+  size_products    String?
+  id_cate_detail   Int?
+  cate_detail      cate_detail?  @relation(fields: [id_cate_detail], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cate             cate?         @relation(fields: [id_cate], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  manufacturer     manufacturer? @relation(fields: [id_manufacturer], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model schedule {
+  id          Int       @id @default(autoincrement())
+  id_order    Int?
+  times       DateTime? @db.Timestamp(6)
+  description String?
+}
+
+model shipping {
+  id               Int      @id @default(autoincrement())
+  name_user        String?
+  address          String?
+  email            String?
+  name             String?
+  image_large      String?
+  support_delivery Boolean?
+  deal             String?
+  color            String?
+  price            Int?
+  size_products    String?
+  status           String?
+}
+
+model users {
+  id       Int        @id @default(autoincrement())
+  phone    String?    @db.VarChar(20)
+  customer customer[]
+}
